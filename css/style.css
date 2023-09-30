@@ -18,12 +18,10 @@ body {
   border-radius: 5px;
   margin: auto;
   margin-top: 50px;
-  border-right: none;
 }
 .search-button {
   padding: 10px 50px;
   border-radius: 25px;
-  margin-left: 20px;
 }
 #all-products {
   display: grid;
@@ -43,6 +41,7 @@ body {
   box-shadow: 4px 4px 7px gray;
   border-radius: 10px;
   border: 1px solid cyan;
+  cursor: pointer;
 }
 .product-image {
   width: 150px;
