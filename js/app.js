@@ -20,7 +20,6 @@ const showProducts = (products) => {
 
    const allProducts = products.slice(0, 10).map((pd) => pd);
    for (const product of allProducts) {
-      console.log(product.image);
       const image = product.image;
       const div = document.createElement('div');
       div.classList.add('product');
@@ -35,7 +34,7 @@ const showProducts = (products) => {
       <button onclick="showProductDetails(${product.id})" id="details-btn"    data-bs-toggle="modal"
       data-bs-target="#exampleModal" class="btn btn-outline-secondary mb-2 rounded-1 mt-1">Details</button>
       
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success border-0 w-100 rounded-0 bg-main py-2">Add to cart</button>
+      <button onclick="addToCart(${product.id},${(product.price).toFixed(2)}); updateTotal()" id="addToCart-btn" class="buy-now btn btn-success border-0 w-100 rounded-0 bg-main py-2">Add to cart</button>
       `;
       document.getElementById('all-products').appendChild(div);
    }
@@ -52,14 +51,12 @@ const addToCart = (id, price) => {
 };
 
 const showProductDetails = (product_id) => {
-   console.log(product_id);
    fetch(`https://fakestoreapi.com/products/${product_id}`)
       .then((res) => res.json())
       .then((data) => showProductDetailsInModal(data));
 };
 
 const showProductDetailsInModal = (product_details) => {
-   console.log(product_details);
    setInnerText('exampleModalLabel', product_details.title);
    setInnerText('product_id', product_details.id);
    setInnerText('modal_body', product_details.description);
@@ -68,21 +65,21 @@ const showProductDetailsInModal = (product_details) => {
 
 const getInputValue = (id) => {
    const element = document.getElementById(id).innerText;
-   const converted = parseInt(element);
+   const converted = parseFloat(element);
    return converted;
 };
 
 // main price update function
 const updatePrice = (id, value) => {
    const convertedOldPrice = getInputValue(id);
-   const convertPrice = parseInt(value);
+   const convertPrice = parseFloat(value);
    const total = convertedOldPrice + convertPrice;
-   document.getElementById(id).innerText = Math.round(total);
+   document.getElementById(id).innerText = total.toFixed(2);
 };
 
 // set innerText function
 const setInnerText = (id, value) => {
-   document.getElementById(id).innerText = Math.round(value);
+   document.getElementById(id).innerText = value.toFixed(2);
 };
 
 // update delivery charge and total Tax
@@ -119,5 +116,3 @@ document.getElementById("search-btn").addEventListener("click", function () {
    );
    showProducts(searchedProduct);
  });
-
-
